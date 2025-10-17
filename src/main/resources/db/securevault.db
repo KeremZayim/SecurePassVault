@@ -1,0 +1,13 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    master_password_hash TEXT NOT NULL,
+    salt TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS passwords (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT NOT NULL,
+    username TEXT,
+    password TEXT NOT NULL,
+    notes TEXT
+);

@@ -1,0 +1,45 @@
+plugins {
+    id 'application'
+    id 'java'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
+}
+
+group = 'com.securevault'
+version = '1.0.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// JavaFX bağımlılıkları buradan yönetilir, dependencies bloğuna yazmaya gerek yok.
+javafx {
+    version = "21.0.8" // Kullandığınız JavaFX SDK sürümü ile aynı olmalı
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+dependencies {
+    // JavaFX bağımlılıkları buradan kaldırıldı. Sadece diğerleri kalacak.
+    implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
+    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'org.slf4j:slf4j-simple:2.0.7'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'org.mockito:mockito-core:5.14.1'
+}
+
+application {
+    // Ana sınıfı burada belirtmemiz yeterli.
+    // Eklenti, JVM argümanlarını otomatik olarak ekleyecektir.
+    mainClass = 'com.securevault.Main'
+}
+
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+// Manuel JVM argümanları ekleyen 'run' bloğu tamamen kaldırıldı.

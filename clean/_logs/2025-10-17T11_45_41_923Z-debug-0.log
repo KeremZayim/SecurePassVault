@@ -1,0 +1,18 @@
+0 verbose cli C:\Program Files\nodejs\node.exe C:\Users\1741k\AppData\Roaming\npm\node_modules\npm\bin\npm-cli.js
+1 info using npm@11.4.1
+2 info using node@v22.12.0
+3 silly config load:file:C:\Users\1741k\AppData\Roaming\npm\node_modules\npm\npmrc
+4 silly config load:file:C:\Users\1741k\IdeaProjects\SecurePassVault\.npmrc
+5 silly config load:file:C:\Users\1741k\.npmrc
+6 silly config load:file:C:\Users\1741k\AppData\Roaming\npm\etc\npmrc
+7 verbose title npm config list
+8 verbose argv "config" "list" "--json"
+9 verbose logfile logs-max:10 dir:C:\Users\1741k\IdeaProjects\SecurePassVault\clean\_logs\2025-10-17T11_45_41_923Z-
+10 verbose logfile C:\Users\1741k\IdeaProjects\SecurePassVault\clean\_logs\2025-10-17T11_45_41_923Z-debug-0.log
+11 silly logfile done cleaning log files
+12 verbose cwd C:\Users\1741k\IdeaProjects\SecurePassVault
+13 verbose os Windows_NT 10.0.26200
+14 verbose node v22.12.0
+15 verbose npm  v11.4.1
+16 verbose exit 0
+17 info ok
