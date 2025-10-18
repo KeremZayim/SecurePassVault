@@ -1,30 +1,63 @@
 package com.securevault;
 
+import com.securevault.service.EncryptionService;
+import com.securevault.utils.AppPreferences;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
+    public static byte[] appKey;
+    public static ResourceBundle bundle;
 
     @Override
-    public void start(Stage stage) throws IOException {
-        // FXML dosyasının resource yolunu alıyoruz
-        URL fxmlLocation = Main.class.getResource("/fxml/login.fxml");
+    public void start(Stage stage) throws Exception {
 
-        if (fxmlLocation == null) {
-            System.err.println("FXML dosyası bulunamadı! Yol doğru mu?");
-            System.exit(1);
+        // Key üretimi / yükleme
+        Path keyFile = Paths.get(System.getProperty("user.home"), ".securevault_key");
+        if (Files.exists(keyFile)) {
+            appKey = Base64.getDecoder().decode(Files.readString(keyFile));
+        } else {
+            appKey = EncryptionService.generateKey();
+            Files.writeString(keyFile, Base64.getEncoder().encodeToString(appKey));
         }
 
-        // FXMLLoader ile FXML yükleme
-        FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
-        Scene scene = new Scene(fxmlLoader.load());
+        // Kaydedilmiş dili yükle
+        String lang = AppPreferences.getLanguage(); // "tr", "en", "de", "es"
+        if (lang == null || lang.isBlank()) lang = "tr";
 
-        stage.setTitle("SecurePassVault");
+        Locale locale = switch (lang) {
+            case "en" -> Locale.ENGLISH;
+            case "de" -> Locale.GERMAN;
+            case "es" -> new Locale("es");
+            default -> new Locale("tr");
+        };
+
+        try {
+            bundle = ResourceBundle.getBundle("lang.messages", locale);
+        } catch (Exception e) {
+            System.err.println("ResourceBundle bulunamadı, varsayılan Türkçe yüklenecek.");
+            bundle = ResourceBundle.getBundle("lang.messages", new Locale("tr"));
+        }
+
+        //  FXML yükleme
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/login.fxml"), bundle);
+        Parent root = loader.load();
+
+        // 4️⃣ Scene oluşturma ve stil ekleme
+        Scene scene = new Scene(root);
+        scene.getStylesheets().add(getClass().getResource("/css/styles.css").toExternalForm());
+
+        stage.setTitle(bundle.getString("app.title"));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

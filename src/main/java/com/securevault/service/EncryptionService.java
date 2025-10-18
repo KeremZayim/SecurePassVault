@@ -47,7 +47,6 @@ public class EncryptionService {
         return new String(decrypted);
     }
 
-    // Örnek anahtar üretimi
     public static byte[] generateKey() throws Exception {
         KeyGenerator keyGen = KeyGenerator.getInstance(AES);
         keyGen.init(256);

@@ -1,34 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.securevault.controller.VaultController">
+            fx:controller="com.securevault.controller.VaultController"
+            style="-fx-background-color: linear-gradient(to bottom right, #8F94FB, #4E54C8);">
 
+    <!-- Üst Menü -->
     <top>
-        <HBox spacing="10" style="-fx-padding: 10;">
-            <TextField fx:id="searchField" promptText="Search..."/>
-            <Button fx:id="addButton" text="Add"/>
-            <Button fx:id="updateButton" text="Update"/>
-            <Button fx:id="deleteButton" text="Delete"/>
-            <Button fx:id="copyButton" text="Copy Password"/>
+        <HBox spacing="10" style="-fx-padding: 10;" alignment="CENTER_LEFT">
+            <TextField fx:id="searchField" promptText="%vault.searchPrompt" HBox.hgrow="ALWAYS"
+                       style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #ccc; -fx-padding: 5;"/>
+            <Button fx:id="addButton" text="%vault.addButton" style="-fx-background-radius: 5; -fx-background-color: #e0e0e0;" />
+            <Button fx:id="updateButton" text="%vault.updateButton" style="-fx-background-radius: 5; -fx-background-color: #e0e0e0;" />
+            <Button fx:id="deleteButton" text="%vault.deleteButton" style="-fx-background-radius: 5; -fx-background-color: #e0e0e0;" />
+            <Button fx:id="copyButton" text="%vault.copyButton" style="-fx-background-radius: 5; -fx-background-color: #e0e0e0;" />
+
+            <MenuButton fx:id="moreMenuButton" text="⋮" style="-fx-background-radius: 5; -fx-background-color: #e0e0e0; -fx-font-size: 12;">
+                <items>
+                    <MenuItem fx:id="importMenuItem" text="%vault.importMenu"/>
+                    <MenuItem fx:id="exportMenuItem" text="%vault.exportMenu"/>
+                </items>
+            </MenuButton>
         </HBox>
     </top>
 
+    <!-- Tablo + Bildirimler -->
     <center>
-        <TableView fx:id="passwordTable" prefHeight="400" prefWidth="600">
-            <columns>
-                <TableColumn fx:id="titleColumn" text="Title" prefWidth="150"/>
-                <TableColumn fx:id="usernameColumn" text="Username" prefWidth="150"/>
-                <TableColumn fx:id="passwordColumn" text="Password" prefWidth="150"/>
-                <TableColumn fx:id="notesColumn" text="Notes" prefWidth="150"/>
-            </columns>
-        </TableView>
-    </center>
+        <VBox alignment="CENTER" spacing="10" style="-fx-padding: 10;">
 
+            <!-- Notification Label -->
+            <Label fx:id="notificationLabel" text=""
+                   style="-fx-background-color: rgba(0,0,0,0.7); -fx-text-fill: white; -fx-padding: 5 10 5 10; -fx-background-radius: 5;"
+                   visible="false"/>
+
+            <TableView fx:id="passwordTable" prefHeight="400" prefWidth="700"
+                       style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0, 0, 2);">
+                <columns>
+                    <TableColumn fx:id="titleColumn" text="%vault.column.title" prefWidth="150"/>
+                    <TableColumn fx:id="usernameColumn" text="%vault.column.username" prefWidth="150"/>
+                    <TableColumn fx:id="passwordColumn" text="%vault.column.password" prefWidth="150"/>
+                    <TableColumn fx:id="notesColumn" text="%vault.column.notes" prefWidth="200"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
 </BorderPane>

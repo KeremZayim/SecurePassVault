@@ -4,7 +4,7 @@ public class PasswordEntry {
     private int id;
     private String title;
     private String username;
-    private String password; // Şifrelenmiş
+    private String password;
     private String notes;
 
     public PasswordEntry(int id, String title, String username, String password, String notes) {

@@ -17,29 +17,33 @@ repositories {
     mavenCentral()
 }
 
-// JavaFX bağımlılıkları buradan yönetilir, dependencies bloğuna yazmaya gerek yok.
 javafx {
-    version = "21.0.8" // Kullandığınız JavaFX SDK sürümü ile aynı olmalı
+    version = "21.0.8"
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 
 dependencies {
-    // JavaFX bağımlılıkları buradan kaldırıldı. Sadece diğerleri kalacak.
     implementation 'org.xerial:sqlite-jdbc:3.46.0.0'
     implementation 'com.google.code.gson:gson:2.11.0'
     implementation 'org.slf4j:slf4j-simple:2.0.7'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
     testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
     testImplementation 'org.mockito:mockito-core:5.14.1'
 }
 
 application {
-    // Ana sınıfı burada belirtmemiz yeterli.
-    // Eklenti, JVM argümanlarını otomatik olarak ekleyecektir.
     mainClass = 'com.securevault.Main'
 }
 
-tasks.withType(Test).configureEach {
-    useJUnitPlatform()
+// Basit UTF-8 ayarları
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
 }
 
-// Manuel JVM argümanları ekleyen 'run' bloğu tamamen kaldırıldı.
+tasks.withType(Test) {
+    systemProperty "file.encoding", "UTF-8"
+}
+
+run {
+    jvmArgs = ['-Dfile.encoding=UTF-8']
+}
